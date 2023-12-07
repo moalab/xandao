@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Scrapper de sites</title>
+</head>
+<body>
+
+  <script>
+    function scrapper(url, section) {
+      // Cria uma nova requisição HTTP
+      const request = new XMLHttpRequest();
+
+      // Define o URL da requisição
+      request.open("GET", url);
+
+      // Envia a requisição
+      request.send();
+
+      // Quando a requisição for concluída, executa o callback
+      request.onload = () => {
+        // Se a requisição foi bem-sucedida,
+        if (request.status === 200) {
+          // Obtém o conteúdo da resposta
+          const response = request.responseText;
+
+          // Encontra a seção desejada
+          const sectionElement = document.querySelector(`[data-section="${section}"`);
+
+          // Se a seção for encontrada,
+          if (sectionElement) {
+            // Obtém o conteúdo da seção
+            const sectionContent = sectionElement.textContent;
+
+            // Exibe o conteúdo da seção
+            document.querySelector(".conteudo").innerHTML = sectionContent;
+          }
+        }
+      };
+    }
+
+    // Define a URL do site a ser raspado
+    const url = "https://www.ufrgs.br/vitrinetecnologica";
+
+    // Define a seção a ser raspada
+    const section = "Status e Oportunidade";
+
+    // Chama a função de raspagem
+    scrapper(url, section);
+  </script>
+
+  <div class="conteudo"></div>
+
+</body>
+</html>
